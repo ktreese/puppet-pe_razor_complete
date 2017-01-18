@@ -1,5 +1,8 @@
 # Enable the tftp feature in dnsmasq
 enable-tftp
 
+# TFTP port range
+tftp-port-range=<%= @tftp_port_range %>
+
 # Tell it where to look for files
 tftp-root=/var/lib/tftpboot
