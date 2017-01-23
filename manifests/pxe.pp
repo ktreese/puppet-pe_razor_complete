@@ -38,7 +38,7 @@ class pe_razor_complete::pxe (
   # The bootstrap is static, but Razor likes to be the one to craft it.
   staging::file { 'bootstrap.ipxe':
     target      => '/var/lib/tftpboot/bootstrap.ipxe',
-    source      => "https://$::{facts['fqdn']}:8151/api/microkernel/bootstrap?nic_max=1&http_port=8150",
+    source      => "https://${::facts['fqdn']}:8151/api/microkernel/bootstrap?nic_max=1&http_port=8150",
     curl_option => '--insecure',
     require     => [ File['/var/lib/tftpboot'], Class['pe_razor'] ],
   }
