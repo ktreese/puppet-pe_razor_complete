@@ -17,7 +17,7 @@ class pe_razor_complete::server {
     ensure   => present,
     provider => 'rpm',
     source   => 'http://puppetfiles.wwt.com/libarchive-devel-3.1.2-10.el7_2.x86_64.rpm',
-    after    => Package['libarchive'],
+    require    => Package['libarchive'],
   }
 
 }
