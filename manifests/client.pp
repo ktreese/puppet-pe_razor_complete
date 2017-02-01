@@ -18,4 +18,12 @@ class pe_razor_complete::client (
     provider => $provider,
   }
 
+  file { '/opt/puppetlabs/puppet/bin/razor':
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0750',
+    require => Package['pe-razor-client'],
+  }
+
 }
