@@ -7,6 +7,8 @@
 # be set properly for all the dhcp, pxe, and ipv4_nat subclasses.
 
 class pe_razor_complete::pxe (
+  $ipxe_url        = $pe_razor_complete::ipxe_url,
+  $tftp_port_range = $pe_razor_complete::tftp_port_range,
 ) inherits pe_razor_complete {
 
   # Enable the dnsmasq tftp server, and aim it at /var/lib/tftpboot for files.
@@ -26,7 +28,7 @@ class pe_razor_complete::pxe (
   # bucket.
   staging::file { 'undionly.kpxe':
     target  => '/var/lib/tftpboot/undionly.kpxe',
-    source  => 'https://s3.amazonaws.com/pe-razor-resources/undionly-20140116.kpxe',
+    source  => $ipxe_url,
     require => [ File['/var/lib/tftpboot'], Class['pe_razor'] ],
   }
 
@@ -36,7 +38,7 @@ class pe_razor_complete::pxe (
   # The bootstrap is static, but Razor likes to be the one to craft it.
   staging::file { 'bootstrap.ipxe':
     target      => '/var/lib/tftpboot/bootstrap.ipxe',
-    source      => "https://${facts['networking']['interfaces'][$dnsmasq_interface]['ip']}:8151/api/microkernel/bootstrap?nic_max=1&http_port=8150",
+    source      => "https://${::facts['fqdn']}:8151/api/microkernel/bootstrap?nic_max=1&http_port=8150",
     curl_option => '--insecure',
     require     => [ File['/var/lib/tftpboot'], Class['pe_razor'] ],
   }

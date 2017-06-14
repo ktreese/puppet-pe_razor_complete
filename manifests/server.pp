@@ -8,4 +8,14 @@ class pe_razor_complete::server {
   # Use the pe_razor module that's included with Puppet Enterprise
   include pe_razor
 
+  package { 'libarchive':
+    ensure => present,
+    before => Class['pe_razor'],
+  }
+
+  package { 'libarchive-devel':
+    ensure   => present,
+    require  => Package['libarchive'],
+  }
+
 }
