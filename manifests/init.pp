@@ -29,6 +29,7 @@ class pe_razor_complete (
   include pe_razor_complete::client
   include pe_razor_complete::dhcp
   include pe_razor_complete::pxe
+  include pe_razor_complete::dns
 
   if ( $ipv4_nat == true ) {
     include pe_razor_complete::ipv4_nat
