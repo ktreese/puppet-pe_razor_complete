@@ -7,8 +7,9 @@
 # be set properly for all the dhcp, pxe, and ipv4_nat subclasses.
 
 class pe_razor_complete::pxe (
-  $ipxe_url        = $pe_razor_complete::ipxe_url,
-  $tftp_port_range = $pe_razor_complete::tftp_port_range,
+  $ipxe_url           = $pe_razor_complete::ipxe_url,
+  $bootstrap_ipxe_url = "https://${::facts['fqdn']}:8151/api/microkernel/bootstrap?nic_max=1&http_port=8150",
+  $tftp_port_range    = $pe_razor_complete::tftp_port_range,
 ) inherits pe_razor_complete {
 
   # Enable the dnsmasq tftp server, and aim it at /var/lib/tftpboot for files.
@@ -38,7 +39,7 @@ class pe_razor_complete::pxe (
   # The bootstrap is static, but Razor likes to be the one to craft it.
   staging::file { 'bootstrap.ipxe':
     target      => '/var/lib/tftpboot/bootstrap.ipxe',
-    source      => "https://${::facts['fqdn']}:8151/api/microkernel/bootstrap?nic_max=1&http_port=8150",
+    source      => $bootstrap_ipxe_url,
     curl_option => '--insecure',
     require     => [ File['/var/lib/tftpboot'], Class['pe_razor'] ],
   }
