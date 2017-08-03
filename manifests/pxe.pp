@@ -8,7 +8,7 @@
 
 class pe_razor_complete::pxe (
   $ipxe_url           = $pe_razor_complete::ipxe_url,
-  $bootstrap_ipxe_url = "https://${::facts['fqdn']}:8151/api/microkernel/bootstrap?nic_max=1&http_port=8150",
+  $bootstrap_ipxe_url = $pe_razor_complete::bootstrap_ipxe_url,
   $tftp_port_range    = $pe_razor_complete::tftp_port_range,
 ) inherits pe_razor_complete {
 
