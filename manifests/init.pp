@@ -18,6 +18,7 @@ class pe_razor_complete (
   $dnsmasq_dhcp_lease   = '24h',
   $dnsmasq_interface    = eth1,
   $ipxe_url             = 'https://s3.amazonaws.com/pe-razor-resources/undionly-20140116.kpxe',
+  $bootstrap_ipxe_url   = "https://${::facts['fqdn']}:8151/api/microkernel/bootstrap?nic_max=1&http_port=8150",
   $tftp_port_range      = '2700,2750',
 
   # Try to act as a NAT router so DHCP machines can get out?
